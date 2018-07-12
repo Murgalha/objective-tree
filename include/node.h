@@ -1,5 +1,4 @@
 #import <Foundation/Foundation.h>
-#import "node.h"
 
 @interface Node : NSObject {
     int value;

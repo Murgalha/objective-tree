@@ -1,4 +1,3 @@
-#import <Foundation/Foundation.h>
 #import "node.h"
 
 @implementation Node
@@ -8,6 +7,7 @@
     self->value = -1;
     self->left = NULL;
     self->right = NULL;
+    self->balanceFactor = 0;
     return self;
 }
 
@@ -16,6 +16,7 @@
     self->value = Value;
     self->left = NULL;
     self->right = NULL;
+    self->balanceFactor = 0;
     return self;
 }
 
@@ -41,6 +42,14 @@
 
 -(void)setLeft:(Node*)pointer {
     self->left = pointer;
+}
+
+-(int)balanceFactor {
+    return self->balanceFactor;
+}
+
+-(void)updateBalanceFactor:(int)bf {
+    self->balanceFactor = bf;
 }
 
 @end
