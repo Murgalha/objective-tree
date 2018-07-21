@@ -36,12 +36,20 @@
     self->right = pointer;
 }
 
+-(Node**)rightAddress {
+    return &(self->right);
+}
+
 -(Node*)left {
     return self->left;
 }
 
 -(void)setLeft:(Node*)pointer {
     self->left = pointer;
+}
+
+-(Node**)leftAddress {
+    return &(self->left);
 }
 
 -(int)balanceFactor {

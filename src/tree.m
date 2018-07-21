@@ -6,7 +6,6 @@
     self = [super init];
     self->root = NULL;
     self->size = 0;
-    self->balanceFactor = 0;
     return self;
 }
 
@@ -37,7 +36,7 @@
     [n updateBalanceFactor:bf];
 }
 
--(BOOL)rotateLeft:(Node*)node son:(Node*)son {
+-(void)rotateLeft:(Node*)node son:(Node*)son {
     Node* aux = [self getFather:node];
 
     if(aux == NULL) self->root = son;
@@ -47,6 +46,45 @@
         [aux setLeft:son];
     [node setRight:[son left]];
     [son setLeft:node];
+}
+
+-(void)rotateRight:(Node*)node son:(Node*)son {
+    Node* aux = [self getFather:node];
+
+    if(aux == NULL) self->root = son;
+    else if(node == [aux left])
+        [aux setLeft:son];
+    else
+        [aux setRight:son];
+    [node setLeft:[son right]];
+    [son setRight:node];
+}
+
+-(void)rotate:(Node*)node value:(double)value {
+    if([node balanceFactor] > 1) {
+        if(value < [node value]) {
+            if([[node left] balanceFactor] > 0)
+                [self rotateRight:node son:[node left]];
+            else {
+                [self rotateLeft:[node left] son:[[node left] right]];
+                [self rotateRight:node son:[node left]];
+            }
+            [self updateBF:node];
+            [self updateBF:[node left]];
+        }
+    }
+    else if([node balanceFactor] < -1) {
+        if(value > [node value]) {
+            if([[node right] balanceFactor] < 0)
+                [self rotateLeft:node son:[node right]];
+            else {
+                [self rotateRight:[node right] son:[[node right] left]];
+                [self rotateLeft:node son:[node right]];
+            }
+            [self updateBF:node];
+            [self updateBF:[node right]];
+        }
+    }
 }
 
 -(double)search:(double)value pointer:(Node*)node {
@@ -60,22 +98,23 @@
         return [self search:value pointer:[node right]];
 }
 
--(BOOL)insert:(double)value nAdress:(Node**)N {
+-(BOOL)insert:(double)value nAddress:(Node**)N {
 	if (*N == NULL) {
 		Node *n = [[Node alloc] init];
 		*N = n;
 	}
 
 	if(value < [(*N) value])
-        [self insert:value nAddress:&[(*N) right]];
+        [self insert:value nAddress:[(*N) rightAddress]];
 	if(value > [(*N) value])
-        [self insert:value nAddress:&[(*N) left]];
+        [self insert:value nAddress:[(*N) leftAddress]];
 
     [self updateBF:*N];
 
 	if (abs([(*N) balanceFactor]) > 1) {
-        // rotate
+        [self rotate:(*N) value:value];
     }
+    return YES;
 }
 
 @end

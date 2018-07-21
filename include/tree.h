@@ -9,6 +9,6 @@
 -(id)init;
 -(int)treeHeight;
 -(double)search:(double)value pointer:(Node*)node;
--(BOOL)insert:(double)value;
+-(BOOL)insert:(double)value nAddress:(Node**)N;
 
 @end
