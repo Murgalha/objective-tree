@@ -13,5 +13,7 @@
 -(void)printPreOrder;
 -(void)printInOrder;
 -(void)printPostOrder;
+-(double)predecessorOf:(double)value;
+-(double)successorOf:(double)value;
 
 @end

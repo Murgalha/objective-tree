@@ -159,4 +159,45 @@
     [self recursiveInsert:value nAddress:&(self->root)]; 
 }
 
+-(double)predecessorOf:(double)value {
+    int num = -1;
+    if(!self->root)
+        return -1;
+    Node* aux = self->root;
+    Node* node = search(self->root, value);
+
+    if(!node)
+        return -1;
+
+    while(aux) {
+        if(value <= [aux value])
+            aux = [aux left];
+        else {
+            num = [aux value];
+            aux = [aux right];
+        }
+    }
+    return num;
+}
+
+-(double)successorOf:(double)value {
+    int num = -1;
+    if(!self->root)
+        return -1;
+    Node* aux = self->root;
+    Node* node = search(self->root, value);
+
+    if(!node)
+        return -1;
+
+    while(aux) {
+        if(value < [aux value])
+            num = [aux value];
+            aux = [aux left];
+        else
+            aux = [aux right];
+    }
+    return num;
+}
+
 @end
