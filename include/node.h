@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
 @interface Node : NSObject {
-    int value;
+    double value;
     int balanceFactor;
     Node* left;
     Node* right;

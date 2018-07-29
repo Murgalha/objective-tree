@@ -32,6 +32,7 @@
 }
 
 -(void) updateBF:(Node*)n {
+    if(!n) return;
     int bf = ([self nodeHeight:[n left]]+1) - ([self nodeHeight:[n right]]+1);
     [n updateBalanceFactor:bf];
 }
@@ -98,23 +99,25 @@
         return [self search:value pointer:[node right]];
 }
 
--(BOOL)insert:(double)value nAddress:(Node**)N {
+-(void)recursiveInsert:(double)value nAddress:(Node**)N {
 	if (*N == NULL) {
-		Node *n = [[Node alloc] init];
+        Node* n = [[Node alloc] init:value];
 		*N = n;
 	}
-
 	if(value < [(*N) value])
-        [self insert:value nAddress:[(*N) rightAddress]];
-	if(value > [(*N) value])
-        [self insert:value nAddress:[(*N) leftAddress]];
+        [self recursiveInsert:value nAddress:[(*N) leftAddress]];
+    else if(value > [(*N) value])
+        [self recursiveInsert:value nAddress:[(*N) rightAddress]];
 
     [self updateBF:*N];
 
 	if (abs([(*N) balanceFactor]) > 1) {
         [self rotate:(*N) value:value];
     }
-    return YES;
+}
+
+-(void)insert:(double)value {
+    [self recursiveInsert:value nAddress:&(self->root)]; 
 }
 
 @end
