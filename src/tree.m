@@ -12,7 +12,7 @@
 -(void)preOrder:(Node*) node {
     if(!node)
         return;
-    NSLog(@"%.2lf ", [node value]);
+    printf("%.2lf ", [node value]);
     [self preOrder:[node left]];
     [self preOrder:[node right]];
 }
@@ -21,7 +21,7 @@
     if(!node)
         return;
     [self inOrder:[node left]];
-    NSLog(@"%.2lf ", [node value]);
+    printf("%.2lf ", [node value]);
     [self inOrder:[node right]];
 }
 
@@ -30,22 +30,22 @@
         return;
     [self postOrder:[node left]];
     [self postOrder:[node right]];
-    NSLog(@"%.2lf ", [node value]);
+    printf("%.2lf ", [node value]);
 }
 
 -(void)printPreOrder {
     [self preOrder:self->root];
-    NSLog(@"\n");
+    printf("\n");
 }
 
 -(void)printInOrder {
     [self inOrder:self->root];
-    NSLog(@"\n");
+    printf("\n");
 }
 
 -(void)printPostOrder {
     [self postOrder:self->root];
-    NSLog(@"\n");
+    printf("\n");
 }
 
 -(int)nodeHeight:(Node*)node {
@@ -103,12 +103,9 @@
 -(void)rotate:(Node*)node value:(double)value {
     if([node balanceFactor] > 1) {
         if(value < [node value]) {
-            if([[node left] balanceFactor] > 0) {
-                NSLog(@"Rotating right");
+            if([[node left] balanceFactor] > 0)
                 [self rotateRight:node son:[node left]];
-            }
             else {
-                NSLog(@"Rotating left right");
                 [self rotateLeft:[node left] son:[[node left] right]];
                 [self rotateRight:node son:[node left]];
             }
@@ -118,12 +115,9 @@
     }
     else if([node balanceFactor] < -1) {
         if(value > [node value]) {
-            if([[node right] balanceFactor] < 0) {                
-                NSLog(@"Rotating left");
+            if([[node right] balanceFactor] < 0)
                 [self rotateLeft:node son:[node right]];
-            }
             else {
-                NSLog(@"Rotating right left");
                 [self rotateRight:[node right] son:[[node right] left]];
                 [self rotateLeft:node son:[node right]];
             }
