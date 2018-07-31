@@ -15,5 +15,7 @@
 -(void)printPostOrder;
 -(double)predecessorOf:(double)value;
 -(double)successorOf:(double)value;
+-(double)min;
+-(double)max;
 
 @end
