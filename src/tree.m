@@ -127,11 +127,11 @@
     }
 }
 
--(double)search:(double)value pointer:(Node*)node {
+-(Node*)search:(double)value pointer:(Node*)node {
     if(node == NULL)
-        return -1;
+        return NULL;
     if([node value] == value)
-        return value;
+        return node;
     else if([node value] > value)
         return [self search:value pointer:[node left]];
     else
@@ -160,11 +160,11 @@
 }
 
 -(double)predecessorOf:(double)value {
-    int num = -1;
+    double num = -1;
     if(!self->root)
         return -1;
     Node* aux = self->root;
-    Node* node = search(self->root, value);
+    Node* node = [self search:value pointer:self->root];
 
     if(!node)
         return -1;
@@ -181,19 +181,20 @@
 }
 
 -(double)successorOf:(double)value {
-    int num = -1;
+    double num = -1;
     if(!self->root)
         return -1;
     Node* aux = self->root;
-    Node* node = search(self->root, value);
+    Node* node = [self search:value pointer:self->root];
 
     if(!node)
         return -1;
 
     while(aux) {
-        if(value < [aux value])
+        if(value < [aux value]) {
             num = [aux value];
             aux = [aux left];
+        }
         else
             aux = [aux right];
     }
