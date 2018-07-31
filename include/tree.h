@@ -8,7 +8,7 @@
 
 -(id)init;
 -(int)treeHeight;
--(double)search:(double)value pointer:(Node*)node;
+-(Node*)search:(double)value pointer:(Node*)node;
 -(void)insert:(double)value;
 -(void)printPreOrder;
 -(void)printInOrder;
