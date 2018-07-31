@@ -201,4 +201,24 @@
     return num;
 }
 
+-(double)min {
+    if(!self->root)
+        return INT_MIN;
+    Node* aux = self->root;
+
+    while([aux left])
+        aux = [aux left];
+    return [aux value];
+}
+
+-(double)max {
+    if(!self->root)
+        return INT_MIN;
+    Node* aux = self->root;
+
+    while([aux right])
+        aux = [aux right];
+    return [aux value];
+}
+
 @end
