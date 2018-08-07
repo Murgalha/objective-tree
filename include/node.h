@@ -1,3 +1,6 @@
+#ifndef _NODE_H_
+#define _NODE_H_
+
 #import <Foundation/Foundation.h>
 
 @interface Node : NSObject {
@@ -21,3 +24,5 @@
 -(void)updateBalanceFactor:(int)bf;
 
 @end
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef _TREE_H_
+#define _TREE_H_
+
 #import <Foundation/Foundation.h>
 #import "node.h"
 
@@ -19,3 +22,5 @@
 -(double)max;
 
 @end
+
+#endif
