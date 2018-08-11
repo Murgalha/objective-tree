@@ -11,7 +11,7 @@
 
 -(id)init;
 -(int)treeHeight;
--(Node*)search:(double)value pointer:(Node*)node;
+-(Node*)search:(double)value;
 -(void)insert:(double)value;
 -(void)printPreOrder;
 -(void)printInOrder;

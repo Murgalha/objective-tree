@@ -73,10 +73,46 @@
             [self->tree printPostOrder];            
         }
         else if([input isEqualToString:@"predecessor"]) {
-            
+            NSString* str;
+            printf("Get predecessor of: ");
+            str = [self readLine];
+            double n = [str doubleValue];
+
+            if(n <= 0) {
+                printf("Invalid number\n");
+            }
+            else if(![self->tree search:n]) {
+                printf("%.2lf is not on the tree\n", n);
+                continue;
+            }
+            else {
+                double pred = [self->tree predecessorOf:n];
+                if(pred == -1)
+                    printf("%.2lf has no predecessor\n", n);
+                else
+                    printf("Predecessor of %.2lf is %.2lf\n", n, pred);
+            }
         }
         else if([input isEqualToString:@"successor"]) {
-            
+            NSString* str;
+            printf("Get successor of: ");
+            str = [self readLine];
+            double n = [str doubleValue];
+
+            if(n <= 0) {
+                printf("Invalid number\n");
+            }
+            else if(![self->tree search:n]) {
+                printf("%.2lf is not on the tree\n", n);
+                continue;
+            }
+            else {
+                double succ = [self->tree successorOf:n];
+                if(succ == -1)
+                    printf("%.2lf has no successor\n", n);
+                else
+                    printf("Successor of %.2lf is %.2lf\n", n, succ);
+            }            
         }
         else if([input isEqualToString:@"return"])
             return;
@@ -90,8 +126,19 @@
     NSString* input;
 
     while(YES) {
-        printf("Type the number you want to insert or ENTER on empty line to return: ");
+        printf("Type the number you want to insert\n(type ENTER on empty line to return): ");
         input = [self readLine];
+
+        if([input isEqualToString:@""])
+            return;
+
+        double d = [input doubleValue];
+        if(d <= 0)
+            printf("Invalid command\n");
+        else {
+            [self->tree insert:d];
+            printf("%.2lf inserted\n", d);
+        }
     }
 }
 
@@ -121,7 +168,7 @@
         input = [self filterMainMenuInput:input];
         
         if([input isEqualToString:@"insert"]) {
-            // insert menu
+            [self insertMenu];
         }
         else if([input isEqualToString:@"view"]) {
             [self viewMenu];
