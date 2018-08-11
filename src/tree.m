@@ -127,15 +127,19 @@
     }
 }
 
--(Node*)search:(double)value pointer:(Node*)node {
+-(Node*)recursiveSearch:(double)value pointer:(Node*)node {
     if(node == NULL)
         return NULL;
     if([node value] == value)
         return node;
     else if([node value] > value)
-        return [self search:value pointer:[node left]];
+        return [self recursiveSearch:value pointer:[node left]];
     else
-        return [self search:value pointer:[node right]];
+        return [self recursiveSearch:value pointer:[node right]];
+}
+
+-(Node*)search:(double)value {
+    return [self recursiveSearch:value pointer:self->root];
 }
 
 -(void)recursiveInsert:(double)value nAddress:(Node**)N {
@@ -164,7 +168,7 @@
     if(!self->root)
         return -1;
     Node* aux = self->root;
-    Node* node = [self search:value pointer:self->root];
+    Node* node = [self search:value];
 
     if(!node)
         return -1;
@@ -185,7 +189,7 @@
     if(!self->root)
         return -1;
     Node* aux = self->root;
-    Node* node = [self search:value pointer:self->root];
+    Node* node = [self search:value];
 
     if(!node)
         return -1;
