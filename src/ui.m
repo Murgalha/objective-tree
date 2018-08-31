@@ -3,6 +3,7 @@
 
 @implementation UI
 
+/* Constructor creating a new AVLTree */
 -(id)init {
     AVLTree* T = [[AVLTree alloc] init];
     self->tree = T;
@@ -14,14 +15,17 @@
     char* str = NULL;
     char c;
 
+    /* Read every char from stdin until '\n' */
     do {
         c = fgetc(stdin);
         str = (char*) realloc (str, sizeof(char)*(counter+1));
         str[counter++] = c;
     } while(c != '\n');
 
+    /* Replace '\n' with '\0' */
     str[counter-1] = '\0';
 
+    /* Convert char* to NSString and return */
     NSString* input = [[NSString alloc] initWithUTF8String:str];
     return input;
 }
@@ -29,6 +33,7 @@
 -(NSString*)filterViewMenuInput:(NSString*)raw {
     raw = [raw lowercaseString];
 
+    /* Verify if input matches menu option */
     if([raw isEqualToString:@"pre-order"] || [raw isEqualToString:@"1"])
         return @"pre";
     else if([raw isEqualToString:@"in-order"] || [raw isEqualToString:@"2"])
@@ -49,6 +54,7 @@
     NSString* input;
 
     while(YES) {
+        /* Print view menu options */
         printf("What do you want to see?\n");
         printf("1. Pre-order print\n");
         printf("2. In-order print\n");
@@ -57,6 +63,7 @@
         printf("5. Successor\n");
         printf("6. Return\n");
 
+        /* Get input and filter it */
         input = [self readLine];
         input = [self filterViewMenuInput:input];
 
@@ -75,17 +82,22 @@
         else if([input isEqualToString:@"predecessor"]) {
             NSString* str;
             printf("Get predecessor of: ");
+
+            /* Get predecessor input and try to convert */
             str = [self readLine];
             double n = [str doubleValue];
 
+            /* Conversion error */
             if(n <= 0) {
                 printf("Invalid number\n");
             }
+            /* Print node search error */
             else if(![self->tree search:n]) {
                 printf("%.2lf is not on the tree\n", n);
                 continue;
             }
             else {
+                /* Print predecessor or error if there are none */
                 double pred = [self->tree predecessorOf:n];
                 if(pred == -1)
                     printf("%.2lf has no predecessor\n", n);
@@ -96,17 +108,22 @@
         else if([input isEqualToString:@"successor"]) {
             NSString* str;
             printf("Get successor of: ");
+
+            /* Get successor input and try to convert */
             str = [self readLine];
             double n = [str doubleValue];
 
+            /* Conversion error */
             if(n <= 0) {
                 printf("Invalid number\n");
             }
+            /* Search error */
             else if(![self->tree search:n]) {
                 printf("%.2lf is not on the tree\n", n);
                 continue;
             }
             else {
+                /* Print predecessor or error if there are none */
                 double succ = [self->tree successorOf:n];
                 if(succ == -1)
                     printf("%.2lf has no successor\n", n);
@@ -132,6 +149,7 @@
         if([input isEqualToString:@""])
             return;
 
+        /* Try to convert input */
         double d = [input doubleValue];
         if(d <= 0)
             printf("Invalid command\n");
@@ -145,6 +163,7 @@
 -(NSString*)filterMainMenuInput:(NSString*)raw {
     raw = [raw lowercaseString];
 
+    /* Verify if input matches menu option */
     if([raw isEqualToString:@"insert"] || [raw isEqualToString:@"1"])
         return @"insert";
     else if([raw isEqualToString:@"view"] || [raw isEqualToString:@"2"])
@@ -159,11 +178,13 @@
     NSString* input;
 
     while(YES) {
+        /* Main menu options */
         printf("Welcome to the AVL Tree Manager.\nWhat do you want to do?\n");
         printf("1. Insert\n");
         printf("2. View\n");
         printf("3. Exit\n");
 
+        /* Get main menu input */
         input = [self readLine];
         input = [self filterMainMenuInput:input];
         

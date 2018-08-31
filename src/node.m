@@ -2,6 +2,7 @@
 
 @implementation Node
 
+/* Empty constructor */
 -(id)init {
     self = [super init];
     self->value = -1;
@@ -11,6 +12,7 @@
     return self;
 }
 
+/* Constructor with value */
 -(id)init:(double)Value {
     self = [super init];
     self->value = Value;
@@ -36,6 +38,7 @@
     self->right = pointer;
 }
 
+/* Return address o right node pointer */
 -(Node**)rightAddress {
     return &(self->right);
 }
@@ -48,6 +51,7 @@
     self->left = pointer;
 }
 
+/* Return address o left node pointer */
 -(Node**)leftAddress {
     return &(self->left);
 }
